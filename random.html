@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Random</title>
+
+  <style>
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(4, 32px);
+      grid-template-rows: repeat(4, 32px);
+      gap: 2px;
+    }
+
+    .box {
+      border: 1px solid black;
+    }
+  </style>
+</head>
+<body>
+  <div class="grid">
+    <div class="box"></div>
+    <div class="box"></div>
+    <div class="box"></div>
+    <div class="box"></div>
+    <div class="box"></div>
+    <div class="box"></div>
+    <div class="box"></div>
+    <div class="box"></div>
+    <div class="box"></div>
+    <div class="box"></div>
+    <div class="box"></div>
+    <div class="box"></div>
+    <div class="box"></div>
+    <div class="box"></div>
+    <div class="box"></div>
+    <div class="box"></div>
+  </div>
+
+  <script>
+    let min = 0;
+    let max = 15;
+    let zabala = getRandomInt(min, max);
+    let player = getRandomInt(min, max);
+
+    /**
+     * Returns a random integer between min (inclusive) and max (inclusive)
+     * 
+     * @param {number} min - Minimum integer (inclusive)
+     * @param {number} max - Maximum integer (inclusive)
+     */
+    function getRandomInt(min, max) {
+      return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+
+    while(zabala === player) {
+      player = getRandomInt(min, max);
+    }
+ 
+    document.querySelectorAll('.box')[zabala].style.backgroundColor = 'yellow';
+    document.querySelectorAll('.box')[player].style.backgroundColor = 'red';
+  </script>
+</body>
+</html>

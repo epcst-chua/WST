@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dumb Solution - GRID</title>
+
+  <style>
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(16, 16px);
+      grid-template-rows: repeat(16, 16px);
+      gap: 2px;
+    }
+
+    .box {
+      border: 1px solid black;
+    }
+  </style>
+</head>
+<body>
+  <div class="grid"></div>
+
+  <script>
+    let currentActiveBox = 1;
+
+    const gridWidth = 16;
+    const gridHeight = 16;
+
+    // grid generation
+    for(let i = 0; i < gridWidth * gridHeight; i++) {
+      document.querySelector('.grid').innerHTML += `<div class="box" id="box${i}"></div>`;
+    }
+
+    for(let box of document.querySelectorAll('.box')) {
+      box.addEventListener('click', function(e) {
+        document.getElementById('box' + currentActiveBox).style.border = '1px solid black';
+        currentActiveBox = parseInt(this.id.replace('box', ''));
+        document.getElementById('box' + currentActiveBox).style.border = '2px solid yellow';
+      });
+    }
+
+    document.addEventListener('keydown', function(e) {
+      document.getElementById('box' + currentActiveBox).style.border = '1px solid black';
+
+      if(e.key === 'd') {
+        currentActiveBox++;
+      }
+      else if(e.key === 'a') {
+        currentActiveBox--;
+      }
+      else if(e.key === 'w') {
+        currentActiveBox -= 16;
+      }
+      else if(e.key === 's') {
+        currentActiveBox += 16;
+      }
+
+      document.getElementById('box' + currentActiveBox).style.border = '2px solid yellow';
+    });
+
+    document.getElementById('box' + currentActiveBox).style.border = '2px solid yellow';
+  </script>
+</body>
+</html>

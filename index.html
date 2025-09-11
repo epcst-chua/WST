@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IT 302</title>
+
+  <style>
+    div {
+      width: 100px;
+      height: 100px;
+      /* border-width: 1px; */
+      /* border-style: solid; */
+      /* border-color: black; */
+      border: 1px solid black; /* SHORTHAND */
+    }
+  </style>
+</head>
+<body>
+  <input type="color" id="colorPicker" oninput="artuz()" />
+  <button onclick="handleClick()">Change body</button>
+
+  <div id="box0" onclick="handleClick('box1')"></div>
+  <div id="box1" onclick="handleClick('box2')"></div>
+  <div id="box2" onclick="handleClick('box3')"></div>
+  <div id="box3" onclick="handleClick('box4')"></div>
+  
+  <!-- Event listener -->
+  <script>
+    let currentActiveBox = 0;
+
+    function artuz() {
+      const color = document.getElementById('colorPicker').value;
+      document.getElementById('box' + currentActiveBox).style.backgroundColor = color;
+    }
+
+    function handleClick(boxId) {
+      
+    }
+
+    document.addEventListener('keydown', function(kahitAno) {
+      console.log(kahitAno);
+      document.getElementById('box' + currentActiveBox).style.border = '1px solid black';
+
+      if(e['key'] == 'w') {
+        currentActiveBox--;
+      }
+      else if(e['key'] == 's') {
+        currentActiveBox++;
+      }
+
+      document.getElementById('box' + currentActiveBox).style.border = '2px solid yellow';
+    });
+  </script>
+</body>
+</html>
