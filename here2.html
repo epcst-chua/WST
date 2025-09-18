@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Grid</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+    html, body {
+      height: 100%;
+    }
+
+    .grid {
+      height: 100%;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .grid2 {
+      display: grid;
+      grid-template-rows: repeat(4, 1fr);
+    }
+  </style>
+</head>
+<body>
+  <div class="grid">
+    <div style="height: 100%; background-color: red;"></div>
+    <div style="height: 100%; background-color: blue;" class="grid2">
+      <div class="box" style="background-color: yellow;"></div>
+      <div class="box" style="background-color: green;"></div>
+      <div class="box" style="background-color: orange;"></div>
+      <div class="box" style="background-color: purple;"></div>
+    </div>
+  </div>  
+
+  <script>
+    // for(let i = 0; i < 256; i++) {
+    //   document.querySelector('.grid').innerHTML += `<div class="box" id="box${i}"></div>`;
+    // }
+  </script>
+</body>
+</html>

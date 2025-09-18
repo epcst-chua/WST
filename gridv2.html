@@ -8,24 +8,45 @@
   <style>
     .grid {
       display: grid;
-      grid-template-columns: repeat(16, 16px);
-      grid-template-rows: repeat(16, 16px);
+      grid-template-columns: repeat(4, 32px);
+      grid-template-rows: repeat(4, 32px);
       gap: 2px;
     }
 
     .box {
       border: 1px solid black;
     }
+
+    .active {
+      background-color: red;
+    }
+
+    .zabala {
+      background-color: yellow;
+    }
   </style>
 </head>
 <body>
+  <p><span id="points">0</span></p>
+  <p><span id="level">0</span></p>
   <div class="grid"></div>
 
   <script>
-    let currentActiveBox = 1;
+    let points = 0;
+    let level = 4;
+    let min = 0;
+    let max = 15;
+    let zabala = getRandomInt(min, max);
+    let player = getRandomInt(min, max);
 
-    const gridWidth = 16;
-    const gridHeight = 16;
+    function getRandomInt(min, max) {
+      return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+
+    let currentActiveBox = getRandomInt(min, max);
+
+    const gridWidth = 4;
+    const gridHeight = 4;
 
     // grid generation
     for(let i = 0; i < gridWidth * gridHeight; i++) {
@@ -40,8 +61,15 @@
       });
     }
 
+    while(zabala === currentActiveBox) {
+      currentActiveBox = getRandomInt(min, max);
+    }
+ 
+    document.querySelectorAll('.box')[zabala].classList.add('zabala');
+    document.querySelectorAll('.box')[currentActiveBox].classList.add('active');
+
     document.addEventListener('keydown', function(e) {
-      document.getElementById('box' + currentActiveBox).style.border = '1px solid black';
+      document.getElementById('box' + currentActiveBox).classList.remove('active');
 
       if(e.key === 'd') {
         currentActiveBox++;
@@ -50,16 +78,47 @@
         currentActiveBox--;
       }
       else if(e.key === 'w') {
-        currentActiveBox -= 16;
+        currentActiveBox -= level;
       }
       else if(e.key === 's') {
-        currentActiveBox += 16;
+        currentActiveBox += level;
       }
 
-      document.getElementById('box' + currentActiveBox).style.border = '2px solid yellow';
+      if(currentActiveBox === zabala) {
+        document.getElementById('points').innerText = ++points;
+
+        if(points % 5 === 0) {
+          level++;
+          document.getElementById('level').innerText = parseInt(document.getElementById('level').innerText) + 1;
+          document.querySelector('.grid').style.gridTemplateColumns = `repeat(${level}, 32px)`;
+          document.querySelector('.grid').style.gridTemplateRows = `repeat(${level}, 32px)`;
+          document.querySelector('.grid').innerHTML = '';
+          for(let i = 0; i < level * level; i++) {
+            document.querySelector('.grid').innerHTML += `<div class="box" id="box${i}"></div>`;
+          }
+
+          currentActiveBox = getRandomInt(0, (level * level) - 1);
+          zabala = getRandomInt(0, (level * level) - 1);
+          while(zabala === currentActiveBox) {
+            currentActiveBox = getRandomInt(0, (level * level) - 1);
+          }
+
+          document.querySelectorAll('.box')[zabala].classList.add('zabala');
+          document.querySelectorAll('.box')[currentActiveBox].classList.add('active');
+        }
+
+        zabala = getRandomInt(0, (level * level) - 1);
+        while(zabala === currentActiveBox) {
+          zabala = getRandomInt(0, (level * level) - 1);
+        }
+
+        document.querySelector('.zabala').classList.remove('zabala');
+        document.querySelectorAll('.box')[zabala].classList.add('zabala');
+      }
+      document.getElementById('box' + currentActiveBox).classList.add('active');
     });
 
-    document.getElementById('box' + currentActiveBox).style.border = '2px solid yellow';
+    document.getElementById('box' + currentActiveBox).classList.add('active');
   </script>
 </body>
 </html>

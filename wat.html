@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pokemon</title>
+
+  <style>
+    .box {
+      border: 1px solid black;
+      height: 64px;
+      width: 64px;
+    }
+  </style>
+</head>
+<body>
+  <div style="display: flex; gap: 4px;">
+    <div class="box" id="box0" onclick="handleBoxClick(0)"></div>
+    <div class="box" id="box1" onclick="handleBoxClick(1)"></div>
+    <div class="box" id="box2" onclick="handleBoxClick(2)"></div>
+    <div class="box" id="box3" onclick="handleBoxClick(3)"></div>
+  </div>
+
+  <script>
+    let userInput = 0;
+    let patterns = [];
+
+    function delay(ms) {
+      return new Promise(resolve => setTimeout(resolve, ms));
+    }
+    
+    function getRandomArbitrary(min, max) {
+      return Math.floor(Math.random() * (max - min) + min);
+    }
+
+    function generatePattern(length) {
+      patterns = [];
+      for(let i = 0; i < length; i++) {
+        patterns.push(getRandomArbitrary(0, 4));
+      }
+    }
+
+    generatePattern(4);
+
+    function handleBoxClick(boxNumber) {
+      if(boxNumber === patterns[userInput]) {
+        userInput++;
+        if(userInput >= patterns.length) {
+          alert('You win!');
+          userInput = 0;
+        }
+      } else {
+        alert('You lose!');
+        userInput = 0;
+      }
+    }
+
+    let i = 0;
+    document.getElementById(`box${patterns[i]}`).style.backgroundColor = 'red';
+    let hello = setInterval(function() {
+      document.getElementById(`box${patterns[i]}`).style.backgroundColor = 'white';
+
+      i++;
+      let patternIndex = patterns[i];
+      let box = document.getElementById(`box${patternIndex}`);
+      box.style.backgroundColor = 'red';
+
+      if(i >= patterns.length) {
+        clearInterval(hello);
+      }
+    }, 1000);
+
+    // console.log('Start');
+    // setTimeout(function() {
+    // console.log('Delayed 1 second');
+    // }, 1000);
+
+    // setInterval(function() {
+    //   console.log('Delayed 2 seconds');
+    // }, 1000);
+
+    // setTimeout(function() {
+    //   console.log('Delayed 3 seconds');
+    // }, 1000);
+
+    // synchronous - blocking
+    // asynchronous - non-blocking
+    // async function fetchData() {
+    //   return await fetch('https://dummyjson.com/posts')
+    //     .then((response) => response.json())
+    //     .then((data) => data);
+    // }
+
+    // async function main() {
+    //   const data = await fetchData();
+    // }
+
+    // main();
+
+    // main();
+
+    // async
+    // fetch('https://api.open-meteo.com/v1/forecast?latitude=14.6042&longitude=120.9822&hourly=temperature_2m')
+    //   .then(response => response.json())
+    //   .then(data => {
+    //     console.log(data);
+    //   })
+    //   .catch(error => {
+    //     console.error('Error fetching data:', error);
+    //   });
+  </script>
+</body>
+</html>
